@@ -142,23 +142,23 @@ export function PresentationSlider() {
     // Title characters cascade in
     const chars = slide.querySelectorAll(".anim-char")
     tl.fromTo(chars,
-      { y: 120, opacity: 0, rotateX: -90, filter: "blur(10px)", scale: 0.8 },
-      { y: 0, opacity: 1, rotateX: 0, filter: "blur(0px)", scale: 1, duration: 1.2, stagger: 0.04, ease: "expo.out" },
-      0.3
+      { y: 100, opacity: 0, rotateX: -80 },
+      { y: 0, opacity: 1, rotateX: 0, duration: 1, stagger: 0.03, ease: "power4.out" },
+      0.4
     )
 
     // Decorative lines grow
     tl.fromTo(slide.querySelectorAll(".anim-line"),
-      { scaleX: 0, opacity: 0 },
-      { scaleX: 1, opacity: 1, duration: 1.5, ease: "expo.inOut" },
-      0.5
+      { scaleX: 0 },
+      { scaleX: 1, duration: 1.2, ease: "power2.inOut" },
+      0.6
     )
 
     // Content cards float up
     tl.fromTo(slide.querySelectorAll(".anim-content"),
-      { y: 100, opacity: 0, filter: "blur(15px)", scale: 0.95 },
-      { y: 0, opacity: 1, filter: "blur(0px)", scale: 1, duration: 1.2, stagger: 0.1, ease: "expo.out" },
-      0.6
+      { y: 80, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1, stagger: 0.08, ease: "power3.out" },
+      0.7
     )
 
     return tl
@@ -254,50 +254,6 @@ export function PresentationSlider() {
     window.addEventListener("keydown", handleKeyDown)
     return () => window.removeEventListener("keydown", handleKeyDown)
   }, [nextSlide, prevSlide])
-
-  // Mouse Parallax Effect
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!containerRef.current) return
-      
-      const { clientX, clientY } = e
-      // Calculate normalized position (-1 to 1)
-      const xPos = (clientX / window.innerWidth - 0.5) * 2
-      const yPos = (clientY / window.innerHeight - 0.5) * 2
-
-      gsap.to(".slide-bg", {
-        x: -xPos * 30, // Opposite subtle movement
-        y: -yPos * 30,
-        duration: 1.5,
-        ease: "power2.out"
-      })
-
-      gsap.to(".anim-content, .anim-chapter", {
-        x: xPos * 20, // Same direction movement
-        y: yPos * 20,
-        duration: 2,
-        ease: "power2.out"
-      })
-      
-      gsap.to(".anim-char", {
-        x: xPos * 40,
-        y: yPos * 40,
-        duration: 0.8,
-        ease: "power2.out",
-        stagger: {
-          amount: 0.1,
-          from: "center"
-        }
-      })
-    }
-
-    // Only apply on desktop
-    if (window.innerWidth > 768) {
-      window.addEventListener("mousemove", handleMouseMove)
-    }
-    
-    return () => window.removeEventListener("mousemove", handleMouseMove)
-  }, [])
 
   // Initial setup
   useEffect(() => {
@@ -628,14 +584,14 @@ export function PresentationSlider() {
       <button
         onClick={prevSlide}
         disabled={currentSlide === 0 || isAnimating}
-        className="absolute left-12 top-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-card/70 backdrop-blur-lg border border-primary/20 flex items-center justify-center text-foreground/60 hover:text-foreground hover:bg-card/90 hover:scale-110 transition-all duration-300 disabled:opacity-0 disabled:pointer-events-none shadow-xl z-40"
+        className="absolute left-12 top-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-card/70 border border-primary/20 flex items-center justify-center text-foreground/60 hover:text-foreground hover:bg-card/90 hover:scale-110 transition-all duration-300 disabled:opacity-0 disabled:pointer-events-none shadow-xl z-40"
       >
         <ChevronLeft className="w-7 h-7" />
       </button>
       <button
         onClick={nextSlide}
         disabled={currentSlide === slides.length - 1 || isAnimating}
-        className="absolute right-12 top-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-card/70 backdrop-blur-lg border border-primary/20 flex items-center justify-center text-foreground/60 hover:text-foreground hover:bg-card/90 hover:scale-110 transition-all duration-300 disabled:opacity-0 disabled:pointer-events-none shadow-xl z-40"
+        className="absolute right-12 top-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-card/70 border border-primary/20 flex items-center justify-center text-foreground/60 hover:text-foreground hover:bg-card/90 hover:scale-110 transition-all duration-300 disabled:opacity-0 disabled:pointer-events-none shadow-xl z-40"
       >
         <ChevronRight className="w-7 h-7" />
       </button>
