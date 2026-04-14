@@ -108,7 +108,7 @@ const slides = [
     author: "Elen Badalyan",
     university: "Yerevan State University",
     faculty: "Faculty of Romance and Germanic Philology",
-    year: "2024",
+    year: "2026",
   },
 ]
 
